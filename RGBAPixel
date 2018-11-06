@@ -18,25 +18,15 @@ public class RGBAPixel extends Picture{ //pictureclass
     private int greenValue;
     private int redValue;
 
-    public RGBAPixel(final int r, final int g,
-                     final int b, String s) {
+    public RGBAPixel(String s) {
         super(s); //calls super constructor on picture class that takes string (we'll just use that class so we'll make sure they only upload jpg) or we can
         //work within the picture class but i think just limiting it's easier 
         //picture should already be in a 2D array, since this picture let's you manipulate pixels so we just have to figure out how they manipulate the pixels and go from 
         //there. 
-        redValue = r;
-        greenValue = g;
-        blueValue = b;
-        
+
         
     }  
     
-    public RGBAPixel[][] getPixels2D(String s ) {
-    	
-    	
-    	
-    	
-    }
     
     public int getRed() {
         return redValue;
@@ -103,24 +93,49 @@ public class RGBAPixel extends Picture{ //pictureclass
      * @param inputArray array of RGBAPixel objects to copy
      * @return copied array of RGBAPixel objects, or null on failure.
      */
-    public static RGBAPixel[][] copyArray(final RGBAPixel[][] inputArray) {
-        if (inputArray == null) {
-            return null;
-        }
-        if (inputArray.length == 0) {
-            return null;
-        }
-        RGBAPixel[][] returnArray = new RGBAPixel[inputArray.length][inputArray[0].length];
-        for (int i = 0; i < inputArray.length; i++) {
-           for (int j = 0; j < inputArray[i].length; j++) {
-               returnArray[i][j] = new RGBAPixel(inputArray[i][j].getRed(), inputArray[i][j].getGreen(),
-               inputArray[i][j].getBlue());
-
-           }
-        }
-        
-        return returnArray;
+//    public static RGBAPixel[][] copyArray(final RGBAPixel[][] inputArray) {
+//        if (inputArray == null) {
+//            return null;
+//        }
+//        if (inputArray.length == 0) {
+//            return null;
+//        }
+//        RGBAPixel[][] returnArray = new RGBAPixel[inputArray.length][inputArray[0].length];
+//        for (int i = 0; i < inputArray.length; i++) {
+//           for (int j = 0; j < inputArray[i].length; j++) {
+//               returnArray[i][j] = new RGBAPixel(inputArray[i][j].getRed(), inputArray[i][j].getGreen(),
+//               inputArray[i][j].getBlue());
+//
+//           }
+//        }
+//        
+//        return returnArray;
+//    }
+    
+    public void Chromakey(Picture newPic){
+  	  //initialize the pixels in the green screen picture and the background picture
+  	  
+  	  
+  	  //create a nested for loop to traverse through the newPic (green screen picture) to find		    the green pixels and replace them with the pixel at the same location from the			    background picture
+  	  for (int row = 0; row < newPic.width(); row++){
+  	      for (int col = 0; col <= newPic.height(); col++){
+  	    	  
+  	    	 //create local variables to store the rgb values from a pixel at a specific location
+  	    	 int red = newPic.getRed();
+  	    	 int green = newPixels[row][col].getGreen();
+  	    	 int blue= newPixels[row][col].getBlue();
+  	    	
+  	    	 //the if statement tests if the green value is bigger than the red and blue values
+  	    	 //the +30 is to make sure that the pixel is truly green - acts like a "buffer zone”
+  	    	 if(green > red + 30 && green > blue + 30) {
+  	    		
+   //if the green value is bigger than the red and blue values, replace the		   pixel at that location with the pixel at the same location from the			   background picture
+  	    		 newPixels[row][col].setColor(pixels[row][col].getColor());
+      		 }
+  	      }
+  	 } 
     }
+
 
     /**
      * Nicely format an two-dimensional array of RGBAPixels.
