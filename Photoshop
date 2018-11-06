@@ -1,7 +1,9 @@
 
 public class Photoshop {
 	public static void main(String[] args) {
-		RGBAPixel one = new RGBAPixel("IMG_9862.jpg");
+		Picture one = new RGBAPixel("IMG_9862.jpg");
+		Picture two = new RGBAPixel("IMG_1338.jpg");
 		one.show();
+		two.show();
 	}
 }
